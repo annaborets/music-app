@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="wrapper">
+        <div *ngFor="let genre of genres" class="genre">
+            <div class="genre__photo"></div>
+            <a routerLink="/albums/{{genre}}" class="genre__link">{{genre|uppercase}}</a>
+        </div>
+    </div>
+</div>

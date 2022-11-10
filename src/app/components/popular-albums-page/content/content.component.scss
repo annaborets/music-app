@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.gray {
+  width: 174px;
+  height: 174px;
+  background-color: gray;
+  border-radius: 15px;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0.85;
+}
+.album {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 15%;
+  margin: 20px 10px;
+  &__img {
+    border-radius: 15px;
+  }
+  &__info {
+    text-align: center;
+    color: white;
+    position: absolute;
+    visibility: hidden;
+  }
+  &:hover {
+    .album__info {
+      visibility: visible;
+      z-index: 5;
+    }
+    .gray {
+      visibility: visible;
+    }
+  }
+}
+
+.bold {
+  font-weight: bolder;
+  font-size: larger;
+  margin-bottom: 20px;
+  max-width: 150px;
+}
+
+.ordinary {
+  padding-bottom: 15px;
+}
+
+.mat-icon {
+  cursor: pointer;
+}

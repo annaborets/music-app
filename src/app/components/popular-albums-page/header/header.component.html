@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="container__item">
+        <a routerLink="" mat-button class="back-button">Back</a>
+        <form class="example-form">
+            <input placeholder="Search" (keyup)="onKey($event)">
+        </form>
+    </div>
+    <div>
+        <mat-icon matBadge={{numberOfLikes}} matBadgeColor="primary">favorite</mat-icon>
+    </div>
+</div>
