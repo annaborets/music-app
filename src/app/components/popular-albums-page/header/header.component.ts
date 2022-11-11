@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, AfterContentInit, OnDestroy } from '@angular/core';
+
 import { Subscription } from 'rxjs';
 
 import { StateService } from 'src/app/services/state.service';
@@ -8,13 +9,13 @@ import { StateService } from 'src/app/services/state.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy, AfterContentInit {
-  private subscription: Subscription = Subscription.EMPTY;
+export class HeaderComponent implements OnDestroy, AfterContentInit {
   public numberOfLikes = 0;
-  inputValue = '';
-  constructor(private stateService: StateService) {}
+  public inputValue = '';
 
-  ngOnInit(): void {}
+  private subscription: Subscription = Subscription.EMPTY;
+
+  constructor(private stateService: StateService) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -22,17 +23,16 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterContentInit {
 
   ngAfterContentInit() {
     this.subscription = this.stateService.send_likes.subscribe((likes) => {
-      console.log(likes);
       this.numberOfLikes = likes;
     });
   }
 
-  onKey(event: any) {
+  public onKey(event: any) {
     this.inputValue = event.target.value;
     this.sendData();
   }
 
-  sendData() {
+  private sendData() {
     this.stateService.send_data.next(this.inputValue);
   }
 }

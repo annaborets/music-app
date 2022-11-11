@@ -1,7 +1,8 @@
 <div class="container">
     <div class="wrapper">
         <div *ngFor="let genre of genres" class="genre">
-            <div class="genre__photo"></div>
+            <mat-icon class="genre__icon genre__icon_bottom">music_note</mat-icon>
+            <mat-icon class="genre__icon genre__icon_top">library_music</mat-icon>
             <a routerLink="/albums/{{genre}}" class="genre__link">{{genre|uppercase}}</a>
         </div>
     </div>

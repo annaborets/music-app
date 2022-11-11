@@ -5,6 +5,7 @@ import { Subscription, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MusicService } from 'src/app/services/music.service';
+import { LocalService } from 'src/app/services/local.service';
 import { FormattedResponseItem, Liked } from 'src/app/models/formattedResponse';
 import { StateService } from 'src/app/services/state.service';
 
@@ -14,17 +15,19 @@ import { StateService } from 'src/app/services/state.service';
   styleUrls: ['./content.component.scss'],
 })
 export class ContentComponent implements OnInit, OnDestroy, AfterContentInit {
-  private subscriptions: Subscription[] = [];
   public albums: (FormattedResponseItem & Liked)[] = [];
   public inputValue = '';
   public numberOfLikes = 0;
-  public durationInSeconds = 5;
+  public isLoading = false;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private musicService: MusicService,
     private route: ActivatedRoute,
     private stateService: StateService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private localService: LocalService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +40,6 @@ export class ContentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.subscriptions.push(
       this.stateService.send_data.subscribe((data) => {
         this.inputValue = data;
-        console.log(this.inputValue);
       })
     );
   }
@@ -46,22 +48,7 @@ export class ContentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
-  fetchAlbums(queryParameter: string): void {
-    this.subscriptions.push(
-      this.musicService.getList(queryParameter).subscribe((items) => {
-        this.albums = items.map((item) => ({ ...item, isLiked: false }));
-        console.log(this.albums);
-      })
-    );
-  }
-
-  likeAlbum(item: FormattedResponseItem & Liked) {
+  public likeAlbum(item: FormattedResponseItem & Liked) {
     this.albums.map((album) => {
       if (album === item) {
         item.isLiked = !item.isLiked;
@@ -71,10 +58,47 @@ export class ContentComponent implements OnInit, OnDestroy, AfterContentInit {
       }
     });
     this.likesCounter();
+    this.updateStorage();
     this.sendLikes();
   }
 
-  likesCounter() {
+  private openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
+  private fetchAlbums(queryParameter: string): void {
+    this.isLoading = true;
+    this.subscriptions.push(
+      this.musicService.getList(queryParameter).subscribe((items) => {
+        const likedAlbums = this.localService.getData('likedAlbums');
+        const likedAlbumNames = likedAlbums ? JSON.parse(likedAlbums) : [];
+
+        this.albums = items.map((item) => ({
+          ...item,
+          isLiked: likedAlbumNames.includes(item.name) ? true : false,
+        }));
+        this.isLoading = false;
+        this.likesCounter();
+        this.sendLikes();
+      })
+    );
+  }
+
+  private updateStorage() {
+    const likedAlbumNames = this.albums.reduce<string[]>((acc, item) => {
+      if (item.isLiked) {
+        return [...acc, item.name];
+      }
+
+      return acc;
+    }, []);
+
+    this.localService.saveData('likedAlbums', JSON.stringify(likedAlbumNames));
+  }
+
+  private likesCounter() {
     let counter = 0;
     this.albums.map((album) => {
       if (album.isLiked === true) {
@@ -84,7 +108,7 @@ export class ContentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.numberOfLikes = counter;
   }
 
-  sendLikes() {
+  private sendLikes() {
     this.stateService.send_likes.next(this.numberOfLikes);
   }
 }

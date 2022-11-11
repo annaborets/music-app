@@ -13,6 +13,7 @@
 }
 
 .genre {
+  position: relative;
   background-color: rgb(187, 82, 82);
   border-radius: 20px;
   flex-grow: 1;
@@ -45,4 +46,24 @@
     justify-content: center;
     align-items: center;
   }
+  &__icon_bottom {
+    right: 30px;
+    bottom: 20px;
+    transform: rotate(30deg);
+  }
+  &__icon_top {
+    left: 30px;
+    top: 20px;
+    transform: rotate(30deg);
+  }
+}
+
+.mat-icon {
+  position: absolute;
+  right: 30px;
+  bottom: 20px;
+  transform: rotate(30deg);
+  width: 50px;
+  height: 50px;
+  font-size: 3rem;
 }

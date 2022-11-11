@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .gray {
   width: 174px;
   height: 174px;
@@ -11,6 +12,7 @@
   visibility: hidden;
   opacity: 0.85;
 }
+
 .album {
   position: relative;
   display: flex;
@@ -52,4 +54,8 @@
 
 .mat-icon {
   cursor: pointer;
+}
+
+.spinner {
+  margin: 0 auto;
 }

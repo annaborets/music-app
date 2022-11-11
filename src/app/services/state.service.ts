@@ -8,6 +8,4 @@ import { Subject } from 'rxjs';
 export class StateService {
   send_data = new Subject<any>();
   send_likes = new Subject<any>();
-
-  constructor() {}
 }

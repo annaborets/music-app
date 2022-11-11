@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { of, map, catchError, Observable } from 'rxjs';
 
-import { Response, ResponseAlbum, ResponseAlbumItem } from '../models/response';
+import { Response } from '../models/response';
 import {
   FormattedResponse,
   FormattedResponseItem,
 } from '../models/formattedResponse';
-import { Genres } from '../models/genres';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MusicService {
   private readonly API_KEY_LASTFM = '22e5dcb7293a23da484afeacce80c247';
-  queryParameter!: string;
-  private readonly model = 'genres';
-  private readonly API_URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=${this.queryParameter}&api_key=${this.API_KEY_LASTFM}&format=json`;
 
   constructor(private http: HttpClient) {}
 
