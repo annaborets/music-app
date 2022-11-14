@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngFor="let item of albums | filter:inputValue" class="album">
+    <div *ngFor="let item of albums | filter:searchValue" class="album">
         <div class="album__info">
             <div class="bold" #message>{{item.name}}</div>
             <div class="ordinary">{{item.artist}}</div>

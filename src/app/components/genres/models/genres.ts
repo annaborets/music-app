@@ -4,5 +4,5 @@ export enum Genres {
   HIPHOP = 'hip-hop',
   POP = 'pop',
   RnB = 'r&b',
-  INDIE = 'indie',
+  INDIE = 'indie'
 }

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { Genres } from 'src/app/models/genres';
+import { Genres } from 'src/app/components/genres/models/genres';
 
 @Component({
   selector: 'app-genres-page',
   templateUrl: './genres-page.component.html',
-  styleUrls: ['./genres-page.component.scss'],
+  styleUrls: ['./genres-page.component.scss']
 })
 export class GenresPageComponent {
   public genres = [
@@ -14,6 +14,6 @@ export class GenresPageComponent {
     Genres.INDIE,
     Genres.POP,
     Genres.ROCK,
-    Genres.RnB,
+    Genres.RnB
   ];
 }

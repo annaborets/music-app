@@ -1,33 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { of, map, catchError, Observable } from 'rxjs';
 
 import { Response } from '../models/response';
 import {
   FormattedResponse,
-  FormattedResponseItem,
+  FormattedResponseItem
 } from '../models/formattedResponse';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class MusicService {
+export class MusicAPIService {
   private readonly API_KEY_LASTFM = '22e5dcb7293a23da484afeacce80c247';
 
   constructor(private http: HttpClient) {}
 
-  public getList(queryParameter: string): Observable<FormattedResponseItem[]> {
+  public getListOfAlbumsByTag(
+    tag: string
+  ): Observable<FormattedResponseItem[]> {
     return this.http
-      .get<Response>(this.getUrl(queryParameter))
+      .get<Response>(this.generateLastFMUrlByTag(tag))
       .pipe(
         map(this.formatResponse),
-        catchError(this.handleError<FormattedResponse>('getList', []))
+        catchError(
+          this.handleError<FormattedResponse>('getListOfAlbumsByTag', [])
+        )
       );
   }
 
-  private getUrl(queryParameter: string): string {
-    return `http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=${queryParameter}&api_key=${this.API_KEY_LASTFM}&format=json`;
+  private generateLastFMUrlByTag(tag: string): string {
+    return `http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=${tag}&api_key=${this.API_KEY_LASTFM}&format=json`;
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -43,7 +46,7 @@ export class MusicService {
       return {
         name: item.name,
         artist: item.artist.name,
-        image: item.image[2]['#text'],
+        image: item.image[2]['#text']
       };
     });
 
