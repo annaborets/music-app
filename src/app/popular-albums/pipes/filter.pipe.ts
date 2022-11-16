@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { FormattedResponseItem, Liked } from '../models/formattedResponse';
+import { FormattedResponseItem, Liked } from '../models/formatted-response';
 
 @Pipe({
   name: 'filter'

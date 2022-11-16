@@ -6,7 +6,7 @@ import { Response } from '../models/response';
 import {
   FormattedResponse,
   FormattedResponseItem
-} from '../models/formattedResponse';
+} from '../models/formatted-response';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 <div class="container">
     <div *ngFor="let item of albums | filter:searchValue" class="album">
         <div class="album__info">
-            <div class="bold" #message>{{item.name}}</div>
+            <div class="bold">{{item.name}}</div>
             <div class="ordinary">{{item.artist}}</div>
             <mat-icon *ngIf="!item.isLiked" (click)="likeAlbum(item)">favorite_border</mat-icon>
             <mat-icon *ngIf="item.isLiked" (click)="likeAlbum(item)">favorite</mat-icon>

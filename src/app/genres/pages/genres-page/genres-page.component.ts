@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Genres } from 'src/app/components/genres/models/genres';
+import { Genres } from 'src/app/genres/models/genres';
 
 @Component({
   selector: 'app-genres-page',

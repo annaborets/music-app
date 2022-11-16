@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
-import { MusicAPIService } from 'src/app/components/popular-albums/services/music-api.service';
+import { MusicAPIService } from 'src/app/popular-albums/services/music-api.service';
 import {
   FormattedResponseItem,
   Liked
-} from 'src/app/components/popular-albums/models/formattedResponse';
-import { StateService } from 'src/app/components/popular-albums/services/state.service';
+} from 'src/app/popular-albums/models/formatted-response';
+import { StateService } from 'src/app/popular-albums/services/state.service';
 
 @Component({
   selector: 'app-content',
@@ -35,7 +35,7 @@ export class ContentComponent implements OnInit, OnDestroy {
       this.fetchAlbums(event['genre']);
     });
     this.subscriptions.push(
-      this.stateService.SearchValueChange.subscribe((data) => {
+      this.stateService.searchValueChange.subscribe((data) => {
         this.searchValue = data;
       })
     );
@@ -70,7 +70,7 @@ export class ContentComponent implements OnInit, OnDestroy {
 
         this.albums = items.map((item) => ({
           ...item,
-          isLiked: likedAlbumNames.includes(item.name) ? true : false
+          isLiked: false
         }));
         this.isLoading = false;
         this.sendLikes();

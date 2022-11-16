@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { StateService } from 'src/app/components/popular-albums/services/state.service';
+import { StateService } from 'src/app/popular-albums/services/state.service';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private sendData() {
-    this.stateService.SearchValueChange.next(this.searchValue);
+    this.stateService.searchValueChange.next(this.searchValue);
   }
 
   ngOnDestroy(): void {

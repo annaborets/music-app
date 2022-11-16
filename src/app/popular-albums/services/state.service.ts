@@ -5,6 +5,6 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class StateService {
-  SearchValueChange = new Subject<string>();
+  searchValueChange = new Subject<string>();
   likesCountChange = new Subject<number>();
 }
